@@ -7,12 +7,12 @@ export default [
     meta: {
       authRequired: true,
     },
-    // component: () => import('@/components/bagarote/Home'),
+    component: () => import('./views/dashboards/default'),
   },
   {
     path: '/login',
     name: 'login',
-    // component: () => import('@/components/bagarote/Login'),
+    component: () => import('./views/account/login'),
     meta: {
       beforeResolve(routeTo, routeFrom, next) {
         // If the user is already logged in
@@ -26,6 +26,7 @@ export default [
       },
     },
   },
+
   {
     path: '/register',
     name: 'Register',

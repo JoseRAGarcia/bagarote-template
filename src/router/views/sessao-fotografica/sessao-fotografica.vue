@@ -1,98 +1,210 @@
 <template>
   <Layout>
-    <b-container>
-      <b-row>
-        <b-col class="camera" cols="8">
-          <div id="canon">
-            <div class="hl-1" :style="y1"></div>
-            <div class="hl-2" :style="y2"></div>
-            <div class="vl-1" :style="x1"></div>
-            <div class="vl-2" :style="x2"></div>
+    <b-row>
+      <!-- Primeira coluna principal -->
+      <b-col class="camera" cols="8">
+        <!-- Tela da câmera -->
+        <div id="canon">
+          <div class="hl-1" :style="y1"></div>
+          <div class="hl-2" :style="y2"></div>
+          <div class="vl-1" :style="x1"></div>
+          <div class="vl-2" :style="x2"></div>
 
-            <input
-              type="range"
-              min="0"
-              max="50"
-              value="0"
-              class="form-control-range horizontal-slider"
-              v-model="xValue"
-            />
-            <input
-              type="range"
-              min="1"
-              max="50"
-              value="0"
-              class="form-control-range vertical-slider"
-              v-model="yValue"
-            />
-          </div>
-          <b-row class="row controles" id="main-ctrl">
-            <b-col>
-              <i class="fas fa-undo-alt fa-2x btn-ctrl"></i>
+          <!-- Controle das guias de centralização -->
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value="0"
+            class="form-control-range horizontal-slider"
+            v-model="xValue"
+          />
+          <input
+            type="range"
+            min="1"
+            max="50"
+            value="0"
+            class="form-control-range vertical-slider"
+            v-model="yValue"
+          />
+        </div>
+
+        <!-- Área de botões -->
+        <b-row class="row controles" id="main-ctrl" align-v="center">
+          <b-col>
+            <i
+              v-b-tooltip.hover
+              title="Girar para esquerda"
+              class="fas fa-undo-alt fa-2x btn-ctrl"
+            ></i>
+          </b-col>
+          <b-col>
+            <i
+              v-b-tooltip.hover
+              title="Girar para direita"
+              class="fas fa-redo-alt fa-2x btn-ctrl"
+            ></i>
+          </b-col>
+          <b-col></b-col>
+          <b-col>
+            <i
+              v-b-tooltip.hover
+              title="Configurar câmera"
+              class="fas fa-info-circle fa-2x btn-ctrl"
+            ></i>
+          </b-col>
+          <b-col>
+            <i
+              v-b-tooltip.hover
+              title="Focar"
+              class="fa fa-crosshairs fa-2x btn-ctrl"
+            ></i>
+          </b-col>
+          <b-col cols="4">
+            <b-row class="text-center">
+              <b-col>
+                <i
+                  v-b-tooltip.hover
+                  title="Diminuir a velocidade do obturador"
+                  class="fas fa-caret-left fa-4x"
+                  id="diminui-velocidade"
+                  style="cursor: pointer"
+                  @click="alterarVelocidadeObturador($event)"
+                ></i>
+              </b-col>
+              <b-col cols="7">
+                <input
+                  type="text"
+                  readonly
+                  class="form-control text-center"
+                  id="vel-obturador"
+                  style="font-size: 28px"
+                  :value="velObiturador + '/10'"
+                />
+              </b-col>
+              <b-col>
+                <i
+                  v-b-tooltip.hover
+                  title="Aumentar a velocidade do obturador"
+                  class="fas fa-caret-right fa-4x"
+                  id="aumenta-velocidade"
+                  style="cursor: pointer"
+                  @click="alterarVelocidadeObturador($event)"
+                ></i>
+              </b-col>
+            </b-row>
+          </b-col>
+          <b-col>
+            <i
+              v-b-tooltip.hover
+              title="Disparar"
+              class="fas fa-camera fa-2x btn-ctrl"
+            ></i>
+          </b-col>
+        </b-row>
+      </b-col>
+
+      <!-- Segunda coluna principal -->
+      <b-col class="ml-4 sessao">
+        <center>
+          <!-- Área de entrada do GTIN -->
+          <form class="form-horizontal" role="form">
+            <b-row>
+              <b-col cols="10">
+                <b-form-group
+                  id="example-search"
+                  label-cols-sm="2"
+                  label-cols-lg="2"
+                  label="GTIN"
+                  label-for="gtin"
+                >
+                  <b-form-input id="gtin" value="" type="search" name="search">
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <i class="fas fa-check-circle fa-2x" style="color: green"></i>
+              </b-col>
+            </b-row>
+          </form>
+          <!-- Área com a descrição do produto -->
+          <textarea
+            class="form-control form-control text-center"
+            style="resize: none; margin-top: 4px"
+            name="Text1"
+            cols="40"
+            rows="3"
+            readonly
+          >
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis enim a itaque impedit cupiditate perferendis eaque numquam non obcaecati.</textarea
+          >
+          <!-- Área com a imagens do produto -->
+          <b-row class="bd-img">
+            <b-col cols="5">
+              <img :src="mainImage" alt="" id="img-main" />
             </b-col>
-            <b-col>
-              <i class="fas fa-redo-alt fa-2x btn-ctrl"></i>
-            </b-col>
-            <b-col></b-col>
-            <b-col>
-              <i class="fas fa-info-circle fa-2x btn-ctrl"></i>
-            </b-col>
-            <b-col>
-              <i class="fa fa-crosshairs fa-2x btn-ctrl"></i>
-            </b-col>
-            <b-col cols="4">
-              <b-row class="text-center">
-                <b-col>
-                  <i
-                    class="fas fa-caret-left fa-4x"
-                    id="diminui-velocidade"
-                    style="cursor: pointer"
-                    @click="alterarVelocidadeObturador($event)"
-                  ></i>
-                </b-col>
-                <b-col cols="7">
-                  <input
-                    type="text"
-                    readonly
-                    class="form-control text-center"
-                    id="vel-obturador"
-                    style="font-size: 28px"
-                    :value="velObiturador + '/10'"
-                  />
-                </b-col>
-                <b-col>
-                  <i
-                    class="fas fa-caret-right fa-4x"
-                    id="aumenta-velocidade"
-                    style="cursor: pointer"
-                    @click="alterarVelocidadeObturador($event)"
-                  ></i>
-                </b-col>
+            <b-col cols="2">
+              <b-row @click="alterarImagem($event)">
+                <img
+                  class="img-sm"
+                  src="@/assets/images/sessao-fotografica/nescau_1.png"
+                  alt=""
+                  id="img-sm-1"
+                />
+              </b-row>
+              <b-row @click="alterarImagem($event)">
+                <img
+                  class="img-sm"
+                  src="@/assets/images/sessao-fotografica/nescau_2.png"
+                  alt=""
+                  id="img-sm-2"
+                />
+              </b-row>
+              <b-row @click="alterarImagem($event)">
+                <img
+                  class="img-sm"
+                  src="@/assets/images/sessao-fotografica/nescau_3.png"
+                  alt=""
+                  id="img-sm-3"
+                />
               </b-row>
             </b-col>
+          </b-row>
+          <!-- Área de botões -->
+          <b-row class="controles" id="sec-ctrl" align-v="center">
+            <b-col></b-col>
             <b-col>
-              <i class="fas fa-camera fa-2x btn-ctrl"></i>
+              <i
+                v-b-tooltip.hover
+                title="Excluir"
+                class="far fa-trash-alt fa-2x btn-ctrl"
+              ></i>
+            </b-col>
+            <b-col>
+              <i
+                v-b-tooltip.hover
+                title="Fotografar sem GTIN"
+                class="fas fa-barcode fa-2x btn-ctrl"
+              ></i>
+            </b-col>
+            <b-col>
+              <i
+                v-b-tooltip.hover
+                title="Pesquisar no Google"
+                class="fab fa-google-plus fa-2x btn-ctrl"
+              ></i>
+            </b-col>
+            <b-col>
+              <i
+                v-b-tooltip.hover
+                title="Sair"
+                class="fas fa-sign-out-alt fa-2x btn-ctrl"
+              ></i>
             </b-col>
           </b-row>
-        </b-col>
-        <b-col class="ml-4">
-          <b-form-group
-            id="example-search"
-            label-cols-sm="2"
-            label-cols-lg="2"
-            label="GTIN"
-            label-for="gtin"
-          >
-            <b-form-input
-              id="gtin"
-              value=""
-              type="search"
-              name="search"
-            ></b-form-input>
-          </b-form-group>
-        </b-col>
-      </b-row>
-    </b-container>
+        </center>
+      </b-col>
+    </b-row>
   </Layout>
 </template>
 
@@ -184,7 +296,28 @@ export default {
   left: calc(100% - 110px);
   top: calc(100% - 140px);
 }
-
+.sessao {
+  margin: 10px 0 0 10px;
+  width: 100%;
+  height: 100vh;
+}
+#nome-produto {
+  width: 100%;
+}
+#img-main {
+  width: 100%;
+}
+.img-sm {
+  margin-left: 0.1px;
+  height: 100px;
+  width: 100px;
+  cursor: pointer;
+}
+.bd-img {
+  padding: 45px 0 27px 0;
+  margin: 10px 0 0 0;
+  width: 200%;
+}
 .controles {
   height: 80px;
   margin: 10px 0 0 0;
@@ -192,11 +325,6 @@ export default {
   border-radius: 5px;
   background-color: #e9ecef;
 }
-
-#main-ctrl {
-  width: 100%;
-}
-
 .btn-ctrl {
   border: 2px solid #2c3e50;
   border-radius: 50%;
@@ -204,7 +332,6 @@ export default {
   background-color: #fff;
   cursor: pointer;
 }
-
 #vel-obturador {
   width: 100%;
   background-color: #fff;
@@ -216,14 +343,12 @@ export default {
   position: relative;
   left: -100%;
   float: left;
-  /* background-color: #2c3e50; */
 }
 .vl-2 {
   border-right: 3px dotted #f8f8fb;
   height: 100%;
   position: relative;
   left: 0;
-  /* background-color: #2c3e50; */
 }
 .hl-1 {
   border-bottom: 3px dotted #f8f8fb;
@@ -232,7 +357,6 @@ export default {
   position: absolute;
   top: -100%;
   float: left;
-  /* background-color: #2c3e50; */
 }
 .hl-2 {
   border-bottom: 3px dotted #f8f8fb;
@@ -241,6 +365,5 @@ export default {
   position: absolute;
   top: 0;
   float: left;
-  /* background-color: #2c3e50; */
 }
 </style>

@@ -7,25 +7,33 @@ export default [
     meta: {
       authRequired: true,
     },
+    component: () => import('./views/dashboards/default'),
+  },
+  {
+    path: '/sessao-fotografica',
+    name: 'default',
+    meta: {
+      authRequired: true,
+    },
     component: () => import('./views/sessao-fotografica/sessao-fotografica'),
   },
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   component: () => import('@/components/bagarote/Login'),
-  //   meta: {
-  //     beforeResolve(routeTo, routeFrom, next) {
-  //       // If the user is already logged in
-  //       if (store.getters['auth/loggedIn']) {
-  //         // Redirect to the home page instead
-  //         next({ name: 'default' })
-  //       } else {
-  //         // Continue to the login page
-  //         next()
-  //       }
-  //     },
-  //   },
-  // },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('./views/account/login'),
+    meta: {
+      beforeResolve(routeTo, routeFrom, next) {
+        // If the user is already logged in
+        if (store.getters['auth/loggedIn']) {
+          // Redirect to the home page instead
+          next({ name: 'default' })
+        } else {
+          // Continue to the login page
+          next()
+        }
+      },
+    },
+  },
   {
     path: '/register',
     name: 'Register',
