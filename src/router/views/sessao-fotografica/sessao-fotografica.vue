@@ -133,7 +133,7 @@
         <center>
           <!-- Área de entrada do GTIN -->
           <form class="form-horizontal" role="form">
-            <b-row>
+            <b-row align-v="center">
               <b-col cols="10">
                 <b-form-group
                   id="example-search"
@@ -142,12 +142,15 @@
                   label="GTIN"
                   label-for="gtin"
                 >
-                  <b-form-input id="gtin" value="" type="search" name="search">
-                  </b-form-input>
-                </b-form-group>
+                  <b-form-input id="gtin" value="" type="search" name="search" v-model="produto.gtin">                                    
+                  </b-form-input>                  
+                </b-form-group>                
               </b-col>
               <b-col>
-                <i class="fas fa-check-circle fa-2x" style="color: green"></i>
+                <i v-if="produto.gtin==''" class="fas fa-barcode fa-2x"></i>
+                <i v-else-if="produto.gtin=='1111111111111'" class="fas fa-exclamation-triangle fa-2x" style="color: red"></i>                
+                <i v-else-if="produto.gtin=='2222222222222'" class="fas fa-check-circle fa-2x" style="color: green"></i>
+                <b-spinner v-else small class="spinner" variant="primary" key="primary"></b-spinner>                
               </b-col>
             </b-row>
           </form>
@@ -209,48 +212,14 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis eni
           </b-row>           -->
           <b-row class="bd-img">
             <b-col cols="5">
-              <img :src="mainImage" alt="" id="img-main" />
+              <img :src="produto.imagens[mainImage]" alt="" id="img-main" />
             </b-col>
             <b-col cols="2" class="imagem-sm overflow-auto">
-              <b-row @click="alterarImagem($event)">
+              <b-row v-for="(img, index) in produto.imagens" :key="index" @click="alterarImagem($event)">
                 <img
+                  :id="index"
                   class="img-sm"
-                  src="@/assets/images/sessao-fotografica/nescau_1.png"
-                  alt=""
-                />
-              </b-row>
-              <b-row @click="alterarImagem($event)">
-                <img
-                  class="img-sm"
-                  src="@/assets/images/sessao-fotografica/nescau_2.png"
-                  alt=""
-                />
-              </b-row>
-              <b-row @click="alterarImagem($event)">
-                <img
-                  class="img-sm"
-                  src="@/assets/images/sessao-fotografica/nescau_3.png"
-                  alt=""
-                />
-              </b-row>
-              <b-row @click="alterarImagem($event)">
-                <img
-                  class="img-sm"
-                  src="@/assets/images/sessao-fotografica/nescau_1.png"
-                  alt=""
-                />
-              </b-row>
-              <b-row @click="alterarImagem($event)">
-                <img
-                  class="img-sm"
-                  src="@/assets/images/sessao-fotografica/nescau_2.png"
-                  alt=""
-                />
-              </b-row>
-              <b-row @click="alterarImagem($event)">
-                <img
-                  class="img-sm"
-                  src="@/assets/images/sessao-fotografica/nescau_3.png"
+                  :src="produto.imagens[index]"
                   alt=""
                 />
               </b-row>
@@ -298,7 +267,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis eni
 </template>
 
 <script>
-import Layout from "../../layouts/main";
+import Layout from '../../layouts/main'
 
 export default {
   components: {
@@ -307,11 +276,23 @@ export default {
 
   data() {
     return {
-      mainImage: require("@/assets/images/sessao-fotografica/nescau_1.png"),
+      mainImage: 0,
       xValue: 0,
       yValue: 0,
       velObiturador: 1,
-      // title: "teste",
+      produto: {
+        gtin: '',
+        nome: '',
+        descricao: '',
+        imagens: [
+          require("@/assets/images/sessao-fotografica/nescau_1.png"),
+          require("@/assets/images/sessao-fotografica/nescau_2.png"),
+          require("@/assets/images/sessao-fotografica/nescau_3.png"),
+          require("@/assets/images/sessao-fotografica/nescau_4.png"),
+          require("@/assets/images/sessao-fotografica/nescau_5.png"),
+          require("@/assets/images/sessao-fotografica/nescau_6.png")    
+          ]
+      },
       camConfig: {
         nome: "Wander",
         diafragma: "F8.0",
@@ -324,7 +305,7 @@ export default {
 
   methods: {
     alterarImagem(event) {
-      this.mainImage = event.target.src;
+      this.mainImage = event.target.id
     },
     alterarVelocidadeObturador(event) {
       if (event.target.id == "diminui-velocidade") {
