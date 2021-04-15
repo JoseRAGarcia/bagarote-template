@@ -5,6 +5,30 @@
       <b-col class="camera" cols="8">
         <!-- Tela da câmera -->
         <div id="canon">
+          <div class="cam-config">
+            <p>
+              {{ camConfig.nome }},
+              <span
+                >Data:
+                {{
+                  camConfig.dataAtual.getDate() +
+                  "/" +
+                  camConfig.dataAtual.getMonth() +
+                  "/" +
+                  camConfig.dataAtual.getFullYear() +
+                  " " +
+                  camConfig.dataAtual.getHours() +
+                  ":" +
+                  camConfig.dataAtual.getMinutes()
+                }}</span
+              >
+            </p>
+            <p>Diafragma: {{ camConfig.diafragma }}</p>
+            <p>ISO: {{ camConfig.iso }}</p>
+            <p>WB: {{ camConfig.wb }}</p>
+            <p>AF</p>
+          </div>
+
           <div class="hl-1" :style="y1"></div>
           <div class="hl-2" :style="y2"></div>
           <div class="vl-1" :style="x1"></div>
@@ -138,18 +162,61 @@
           >
 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis enim a itaque impedit cupiditate perferendis eaque numquam non obcaecati.</textarea
           >
-          <!-- Área com a imagens do produto -->
+          <!-- Área com as imagens do produto -->
+          
+          <!-- <b-row class="mt-1" style="height:400px; paddingTop:10%; paddingBottom:10%; overflow:auto;">
+            <b-col>
+              <div class="product-detai-imgs">
+                <b-tabs pills vertical end nav-wrapper-class="col-md-3 col-sm-3 col-4">
+                  <b-tab>
+                    <template v-slot:title>
+                      <img src="@/assets/images/sessao-fotografica/nescau_1.png" alt="" class="img-fluid mx-auto d-block tab-img rounded">
+                    </template>
+                    <div class="product-img">
+                      <img src="@/assets/images/sessao-fotografica/nescau_1.png" alt="" class="img-fluid mx-auto d-block">
+                    </div>
+                  </b-tab>
+
+                  <b-tab>
+                    <template v-slot:title>
+                      <img src="@/assets/images/sessao-fotografica/nescau_2.png" alt="" class="img-fluid mx-auto d-block tab-img rounded">
+                    </template>
+                    <div class="product-img">
+                      <img src="@/assets/images/sessao-fotografica/nescau_2.png" alt="" class="img-fluid mx-auto d-block">
+                    </div>
+                  </b-tab>
+
+                  <b-tab>
+                    <template v-slot:title>
+                      <img src="@/assets/images/sessao-fotografica/nescau_3.png" alt="" class="img-fluid mx-auto d-block tab-img rounded">
+                    </template>
+                    <div>
+                      <img src="@/assets/images/sessao-fotografica/nescau_3.png" alt="" class="img-fluid mx-auto d-block">
+                    </div>
+                  </b-tab>
+
+                  <b-tab>
+                    <template v-slot:title>
+                      <img src="@/assets/images/sessao-fotografica/nescau_1.png" alt="" class="img-fluid mx-auto d-block tab-img rounded">
+                    </template>
+                    <div>
+                      <img src="@/assets/images/sessao-fotografica/nescau_1.png" alt="" class="img-fluid mx-auto d-block">
+                    </div>
+                  </b-tab>                  
+                </b-tabs>
+              </div>
+            </b-col>
+          </b-row>           -->
           <b-row class="bd-img">
             <b-col cols="5">
               <img :src="mainImage" alt="" id="img-main" />
             </b-col>
-            <b-col cols="2">
+            <b-col cols="2" class="imagem-sm overflow-auto">
               <b-row @click="alterarImagem($event)">
                 <img
                   class="img-sm"
                   src="@/assets/images/sessao-fotografica/nescau_1.png"
                   alt=""
-                  id="img-sm-1"
                 />
               </b-row>
               <b-row @click="alterarImagem($event)">
@@ -157,7 +224,6 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis eni
                   class="img-sm"
                   src="@/assets/images/sessao-fotografica/nescau_2.png"
                   alt=""
-                  id="img-sm-2"
                 />
               </b-row>
               <b-row @click="alterarImagem($event)">
@@ -165,7 +231,27 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis eni
                   class="img-sm"
                   src="@/assets/images/sessao-fotografica/nescau_3.png"
                   alt=""
-                  id="img-sm-3"
+                />
+              </b-row>
+              <b-row @click="alterarImagem($event)">
+                <img
+                  class="img-sm"
+                  src="@/assets/images/sessao-fotografica/nescau_1.png"
+                  alt=""
+                />
+              </b-row>
+              <b-row @click="alterarImagem($event)">
+                <img
+                  class="img-sm"
+                  src="@/assets/images/sessao-fotografica/nescau_2.png"
+                  alt=""
+                />
+              </b-row>
+              <b-row @click="alterarImagem($event)">
+                <img
+                  class="img-sm"
+                  src="@/assets/images/sessao-fotografica/nescau_3.png"
+                  alt=""
                 />
               </b-row>
             </b-col>
@@ -184,15 +270,18 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis eni
               <i
                 v-b-tooltip.hover
                 title="Fotografar sem GTIN"
-                class="fas fa-barcode fa-2x btn-ctrl"
+                class="fas fa-ban fa-4x"
+                style="position: absolute; cursor: pointer"
               ></i>
+              <i class="fas fa-barcode fa-2x btn-ctrl"></i>
             </b-col>
             <b-col>
               <i
                 v-b-tooltip.hover
                 title="Pesquisar no Google"
                 class="fab fa-google-plus fa-2x btn-ctrl"
-              ></i>
+              >
+              </i>
             </b-col>
             <b-col>
               <i
@@ -222,6 +311,14 @@ export default {
       xValue: 0,
       yValue: 0,
       velObiturador: 1,
+      // title: "teste",
+      camConfig: {
+        nome: "Wander",
+        diafragma: "F8.0",
+        iso: 100,
+        wb: 0.0,
+        dataAtual: new Date(),
+      },
     };
   },
 
@@ -282,6 +379,11 @@ export default {
   position: relative;
   display: inline-block;
 }
+.cam-config {
+  color: #fff;
+  position: absolute;
+  padding: 5px;
+}
 .horizontal-slider {
   width: 50%;
   position: relative;
@@ -308,10 +410,12 @@ export default {
   width: 100%;
 }
 .img-sm {
-  margin-left: 0.1px;
   height: 100px;
   width: 100px;
   cursor: pointer;
+}
+.imagem-sm {
+  height: 300px;
 }
 .bd-img {
   padding: 45px 0 27px 0;
@@ -319,6 +423,9 @@ export default {
   width: 200%;
 }
 .controles {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
   height: 80px;
   margin: 10px 0 0 0;
   padding: 10px;
