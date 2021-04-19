@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "gtin": "1111111111111",
+        "nome": "Nescau",
+        "descricao": "Achocolatado em pó",
+        "imagens": [
+            "D:/Google Drive/Karyon/bagarote-template/src/assets/images/sessao-fotografica/nescau_1.png",
+            "D:/Google Drive/Karyon/bagarote-template/src/assets/images/sessao-fotografica/nescau_2.png",
+            "@/assets/images/sessao-fotografica/nescau_3.png",
+            "@/assets/images/sessao-fotografica/nescau_4.png",
+            "@/assets/images/sessao-fotografica/nescau_5.png",
+            "@/assets/images/sessao-fotografica/nescau_6.png"
+        ]
+    },
+    {
+        "id": 2,
+        "gtin": "2222222222222",
+        "nome": "Coca-Cola",
+        "descricao": "Refrigerante",
+        "imagens": [
+            "@/assets/images/sessao-fotografica/nescau_1.png",
+            "@/assets/images/sessao-fotografica/nescau_2.png",
+            "@/assets/images/sessao-fotografica/nescau_3.png",
+            "@/assets/images/sessao-fotografica/nescau_4.png",
+            "@/assets/images/sessao-fotografica/nescau_5.png",
+            "@/assets/images/sessao-fotografica/nescau_6.png"
+        ]
+    }
+]

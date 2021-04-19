@@ -132,7 +132,7 @@
       <b-col class="ml-4 sessao">
         <center>
           <!-- Área de entrada do GTIN -->
-          <form class="form-horizontal" role="form">
+          <form class="form-horizontal" role="form" @submit.prevent="fetchData">
             <b-row align-v="center">
               <b-col cols="10">
                 <b-form-group
@@ -144,7 +144,7 @@
                 >
                   <b-form-input id="gtin" value="" type="search" name="search" v-model="produto.gtin">                                    
                   </b-form-input>                  
-                </b-form-group>                
+                </b-form-group>                           
               </b-col>
               <b-col>
                 <i v-if="produto.gtin==''" class="fas fa-barcode fa-2x"></i>
@@ -162,8 +162,9 @@
             cols="40"
             rows="3"
             readonly
-          >
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore corporis enim a itaque impedit cupiditate perferendis eaque numquam non obcaecati.</textarea
+            v-model="produtoDb.nome"
+          >          
+          </textarea
           >
           <!-- Área com as imagens do produto -->
           
@@ -280,6 +281,7 @@ export default {
       xValue: 0,
       yValue: 0,
       velObiturador: 1,
+      produtoDb: {},
       produto: {
         gtin: '',
         nome: '',
@@ -290,7 +292,7 @@ export default {
           require("@/assets/images/sessao-fotografica/nescau_3.png"),
           require("@/assets/images/sessao-fotografica/nescau_4.png"),
           require("@/assets/images/sessao-fotografica/nescau_5.png"),
-          require("@/assets/images/sessao-fotografica/nescau_6.png")    
+          require("@/assets/images/sessao-fotografica/coca-cola/coca-cola_6.png")    
           ]
       },
       camConfig: {
@@ -320,6 +322,21 @@ export default {
         }
       }
     },
+    async fetchData() {
+          this.produtoDb = {}
+          
+          const res = await fetch("produto.json")
+          const val = await res.json()          
+
+          for(var i = 0; i < val.length; i++) {
+            if(val[i].gtin == this.produto.gtin) {
+              this.produtoDb = val[i]
+              /* eslint-disable no-console */
+              console.log(val[i])
+              /* eslint-enable no-console */
+            }            
+          }
+    }
   },
 
   computed: {

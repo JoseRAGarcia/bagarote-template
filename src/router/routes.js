@@ -11,11 +11,19 @@ export default [
   },
   {
     path: '/sessao-fotografica',
-    name: 'default',
+    name: 'sessao-fotografica',
     meta: {
       authRequired: true,
     },
     component: () => import('./views/sessao-fotografica/sessao-fotografica'),
+  },
+  {
+    path: '/cadastro-empresa',
+    name: 'cadastro-empresa',
+    meta: {
+      authRequired: true,
+    },
+    component: () => import('./views/cadastro/cadastro-empresa'),
   },
   {
     path: '/login',
