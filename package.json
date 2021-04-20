@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 3000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
@@ -20,6 +20,7 @@
     "@fullcalendar/vue": "^5.3.1",
     "@voerro/vue-tagsinput": "^2.4.3",
     "apexcharts": "^3.22.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "chart.js": "^2.9.4",
@@ -35,7 +36,7 @@
     "simplebar-vue": "^1.6.0",
     "sweetalert2": "^10.12.3",
     "v-click-outside": "^3.1.2",
-    "v-mask": "^2.2.3",
+    "v-mask": "^2.2.4",
     "vue": "^2.6.12",
     "vue-apexcharts": "^1.6.0",
     "vue-carousel": "^0.18.0",

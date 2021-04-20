@@ -24,6 +24,8 @@ import { configureFakeBackend } from './helpers/fake-backend';
 import tinymce from 'vue-tinymce-editor'
 Vue.component('tinymce', tinymce)
 
+import { VueMaskDirective } from "v-mask";
+Vue.directive("mask", VueMaskDirective);
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_APIKEY,
